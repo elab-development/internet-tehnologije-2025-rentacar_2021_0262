@@ -1,0 +1,136 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h1>Rent-a-Car</h1>
+      <p>Dobrodošli</p>
+    </div>
+
+    <div class="tabs">
+      <button 
+        class="tab" 
+        [class.active]="activeTab === 'login'"
+        (click)="switchTab('login')">
+        Prijava
+      </button>
+      <button 
+        class="tab" 
+        [class.active]="activeTab === 'register'"
+        (click)="switchTab('register')">
+        Registracija
+      </button>
+    </div>
+
+    <div class="messages">
+      <div class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+      <div class="success-message" *ngIf="successMessage">
+        {{ successMessage }}
+      </div>
+    </div>
+
+    <div class="tab-content" *ngIf="activeTab === 'login'">
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input 
+            type="email" 
+            id="login-email" 
+            formControlName="email"
+            placeholder="vas@email.com">
+          <div class="validation-error" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+            Unesite validan email
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="login-password">Lozinka</label>
+          <input 
+            type="password" 
+            id="login-password" 
+            formControlName="password"
+            placeholder="••••••••">
+          <div class="validation-error" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+            Lozinka je obavezna
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn" [disabled]="isLoading">
+          <span *ngIf="!isLoading">Prijavi se</span>
+          <span *ngIf="isLoading">Učitavanje...</span>
+        </button>
+      </form>
+    </div>
+
+    <div class="tab-content" *ngIf="activeTab === 'register'">
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName">Ime</label>
+            <input 
+              type="text" 
+              id="firstName" 
+              formControlName="firstName"
+              placeholder="Ime">
+            <div class="validation-error" *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched">
+              Ime je obavezno
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="lastName">Prezime</label>
+            <input 
+              type="text" 
+              id="lastName" 
+              formControlName="lastName"
+              placeholder="Prezime">
+            <div class="validation-error" *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched">
+              Prezime je obavezno
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="register-email">Email</label>
+          <input 
+            type="email" 
+            id="register-email" 
+            formControlName="email"
+            placeholder="vas@email.com">
+          <div class="validation-error" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+            Unesite validan email
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="age">Broj godina</label>
+          <input 
+            type="number" 
+            id="age" 
+            formControlName="age"
+            placeholder="18">
+          <div class="validation-error" *ngIf="registerForm.get('age')?.invalid && registerForm.get('age')?.touched">
+            Morate imati najmanje 18 godina
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="register-password">Lozinka</label>
+          <input 
+            type="password" 
+            id="register-password" 
+            formControlName="password"
+            placeholder="••••••••">
+          <div class="validation-error" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+            Lozinka mora imati najmanje 6 karaktera
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn" [disabled]="isLoading">
+          <span *ngIf="!isLoading">Registruj se</span>
+          <span *ngIf="isLoading">Učitavanje...</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
