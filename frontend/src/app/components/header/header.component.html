@@ -1,0 +1,24 @@
+<header class="header">
+  <div class="container">
+    <div class="logo" (click)="navigateToHome()">
+      <h1>RentACar</h1>
+    </div>
+    
+    <nav class="nav">
+      <a class="nav-link" (click)="navigateToHome()">Početna</a>
+      
+      <div class="auth-section">
+        <ng-container *ngIf="authService.isLoggedIn(); else notLoggedIn">
+          <span class="user-info">
+            Dobrodošao, {{ authService.currentUserValue?.firstName }}
+          </span>
+          <button class="btn btn-logout" (click)="logout()">Odjavi se</button>
+        </ng-container>
+        
+        <ng-template #notLoggedIn>
+          <button class="btn btn-login" (click)="navigateToAuth()">Prijavi se</button>
+        </ng-template>
+      </div>
+    </nav>
+  </div>
+</header>

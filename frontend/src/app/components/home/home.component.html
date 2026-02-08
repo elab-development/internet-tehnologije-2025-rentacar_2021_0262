@@ -1,0 +1,86 @@
+<div class="home-container">
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">Dobrodošli u RentACar</h1>
+      <p class="hero-subtitle">Pronađite savršen automobil za svaku priliku</p>
+    </div>
+  </section>
+
+  <section class="cars-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Naša flota vozila</h2>
+        <button 
+          *ngIf="authService.isAdmin()"
+          class="btn btn-add"
+          (click)="addNewCar()">
+          + Dodaj oglas
+        </button>
+      </div>
+      
+      <div class="cars-grid">
+        <div *ngFor="let car of cars" class="car-card" [class.unavailable]="!car.available">
+          <div class="car-image-container">
+            <img [src]="car.imageUrl" [alt]="car.brand + ' ' + car.model" class="car-image">
+            <div *ngIf="!car.available" class="unavailable-badge">Nedostupno</div>
+          </div>
+          
+          <div class="car-details">
+            <h3 class="car-title">{{ car.brand }} {{ car.model }}</h3>
+            <p class="car-year">{{ car.year }}. godina</p>
+            
+            <div class="car-specs">
+              <div class="spec">
+                <span class="spec-icon">⛽</span>
+                <span>{{ car.fuelType }}</span>
+              </div>
+              <div class="spec">
+                <span class="spec-icon">⚙️</span>
+                <span>{{ car.transmission }}</span>
+              </div>
+              <div class="spec">
+                <span class="spec-icon">👥</span>
+                <span>{{ car.seats }} sedišta</span>
+              </div>
+            </div>
+            
+            <div class="car-footer">
+              <div class="price">
+                <span class="price-amount">{{ car.pricePerDay }}€</span>
+                <span class="price-label">/dan</span>
+              </div>
+              
+              <button 
+                *ngIf="authService.isAdmin()"
+                class="btn btn-edit"
+                (click)="editCar(car)">
+                Izmeni
+              </button>
+              
+              <button 
+                *ngIf="authService.isUser() && car.available"
+                class="btn btn-rent"
+                (click)="rentCar(car)">
+                Iznajmi
+              </button>
+              
+              <button 
+                *ngIf="!authService.isLoggedIn() && car.available"
+                class="btn btn-view"
+                disabled>
+                Prijavite se za iznajmljivanje
+              </button>
+              
+              <button 
+                *ngIf="authService.isUser() && !car.available"
+                class="btn btn-disabled"
+                disabled>
+                Nedostupno
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
