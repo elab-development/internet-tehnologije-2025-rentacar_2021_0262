@@ -34,6 +34,10 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Broj godina je obavezan'],
     min: [18, 'Morate imati najmanje 18 godina']
   },
+  isVerified: {
+    type: Boolean,
+    default: false
+  },
   createdAt: {
     type: Date,
     default: Date.now

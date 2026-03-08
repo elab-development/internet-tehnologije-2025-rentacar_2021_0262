@@ -11,7 +11,10 @@
     "seed:cars": "node src/seed/car.seed.js",
     "seed:categories": "node src/seed/category.seed.js",
     "seed:assign-categories": "node src/seed/assign-categories.js",
-    "seed:reviews": "node src/seed/review.seed.js"
+    "seed:reviews": "node src/seed/review.seed.js",
+    "migrate:001": "node src/migrations/001-add-categoryId-to-cars.js",
+    "migrate:002": "node src/migrations/002-add-averageRating-to-cars.js",
+    "migrate:003": "node src/migrations/003-add-isVerified-to-users.js"
   },
   "keywords": ["rentacar", "express", "mongodb"],
   "author": "",
