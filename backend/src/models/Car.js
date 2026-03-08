@@ -22,12 +22,18 @@ const carSchema = new mongoose.Schema({
     required: [true, 'Snaga motora je obavezna'],
     min: [30, 'Snaga mora biti najmanje 30 KS']
   },
+  seats: {
+    type: Number,
+    required: [true, 'Broj sedišta je obavezan'],
+    min: [1, 'Broj sedišta mora biti najmanje 1'],
+    max: [9, 'Broj sedišta ne može biti veći od 9']
+  },
   fuelType: {
     type: String,
     required: [true, 'Vrsta goriva je obavezna'],
     enum: {
-      values: ['diesel', 'petrol'],
-      message: 'Gorivo mora biti diesel ili petrol'
+      values: ['diesel', 'petrol', 'hybrid'],
+      message: 'Gorivo mora biti diesel, petrol ili hybrid'
     }
   },
   transmission: {

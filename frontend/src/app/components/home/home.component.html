@@ -17,8 +17,12 @@
           + Dodaj oglas
         </button>
       </div>
-      
-      <div class="cars-grid">
+
+      <div *ngIf="isLoading" class="loading-message">Učitavanje automobila...</div>
+
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+      <div class="cars-grid" *ngIf="!isLoading && !errorMessage">
         <div *ngFor="let car of cars" class="car-card" [class.unavailable]="!car.available">
           <div class="car-image-container">
             <img [src]="car.imageUrl" [alt]="car.brand + ' ' + car.model" class="car-image">
@@ -32,11 +36,11 @@
             <div class="car-specs">
               <div class="spec">
                 <span class="spec-icon">⛽</span>
-                <span>{{ car.fuelType }}</span>
+                <span>{{ getFuelLabel(car.fuelType) }}</span>
               </div>
               <div class="spec">
                 <span class="spec-icon">⚙️</span>
-                <span>{{ car.transmission }}</span>
+                <span>{{ getTransmissionLabel(car.transmission) }}</span>
               </div>
               <div class="spec">
                 <span class="spec-icon">👥</span>
@@ -60,7 +64,7 @@
               <button 
                 *ngIf="authService.isUser() && car.available"
                 class="btn btn-rent"
-                (click)="rentCar(car)">
+                (click)="openRentModal(car)">
                 Iznajmi
               </button>
               
@@ -83,4 +87,41 @@
       </div>
     </div>
   </section>
+
+  <div class="modal-overlay" *ngIf="selectedCar" (click)="closeRentModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h3 class="modal-title">Iznajmi: {{ selectedCar.brand }} {{ selectedCar.model }}</h3>
+      <p class="modal-price">{{ selectedCar.pricePerDay }}€ / dan</p>
+
+      <div class="modal-field">
+        <label for="startDate">Datum preuzimanja</label>
+        <input
+          type="date"
+          id="startDate"
+          [(ngModel)]="rentalStartDate"
+          [min]="todayDate"
+          class="modal-input">
+      </div>
+
+      <div class="modal-field">
+        <label for="endDate">Datum vraćanja</label>
+        <input
+          type="date"
+          id="endDate"
+          [(ngModel)]="rentalEndDate"
+          [min]="rentalStartDate || todayDate"
+          class="modal-input">
+      </div>
+
+      <p *ngIf="rentalError" class="modal-error">{{ rentalError }}</p>
+      <p *ngIf="rentalMessage" class="modal-success">{{ rentalMessage }}</p>
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" (click)="closeRentModal()">Otkaži</button>
+        <button class="btn btn-rent" (click)="confirmRent()" [disabled]="isRenting">
+          {{ isRenting ? 'Rezervišem...' : 'Potvrdi rezervaciju' }}
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

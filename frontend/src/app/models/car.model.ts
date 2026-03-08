@@ -1,12 +1,14 @@
 export interface Car {
-  id: string;
+  _id: string;
   brand: string;
   model: string;
   year: number;
+  power: number;
   pricePerDay: number;
-  fuelType: string;
-  transmission: string;
+  fuelType: 'diesel' | 'petrol' | 'hybrid';
+  transmission: 'manual' | 'automatic';
   seats: number;
   imageUrl: string;
+  isActive: boolean;
   available: boolean;
 }
