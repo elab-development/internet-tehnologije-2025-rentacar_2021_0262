@@ -39,7 +39,7 @@
       <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
       <div class="cars-grid" *ngIf="!isLoading && !errorMessage">
-        <div *ngFor="let car of cars" class="car-card" [class.unavailable]="!car.available">
+        <div *ngFor="let car of cars" class="car-card" appHighlight [class.unavailable]="!car.available">
           <div class="car-image-container">
             <img [src]="car.imageUrl" [alt]="car.brand + ' ' + car.model" class="car-image">
             <div *ngIf="!car.available" class="unavailable-badge">Nedostupno</div>
@@ -57,11 +57,11 @@
             <div class="car-specs">
               <div class="spec">
                 <span class="spec-icon">⛽</span>
-                <span>{{ getFuelLabel(car.fuelType) }}</span>
+                <span>{{ car.fuelType | fuelType }}</span>
               </div>
               <div class="spec">
                 <span class="spec-icon">⚙️</span>
-                <span>{{ getTransmissionLabel(car.transmission) }}</span>
+                <span>{{ car.transmission | fuelType:'transmission' }}</span>
               </div>
               <div class="spec">
                 <span class="spec-icon">👥</span>

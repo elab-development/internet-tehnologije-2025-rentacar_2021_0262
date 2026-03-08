@@ -11,6 +11,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
 import { CarReviewsComponent } from './components/car-reviews/car-reviews.component';
 import { AdminReviewsComponent } from './components/admin-reviews/admin-reviews.component';
+import { FuelTypePipe } from './pipes/fuel-type.pipe';
+import { HighlightDirective } from './directives/highlight.directive';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { AdminReviewsComponent } from './components/admin-reviews/admin-reviews.
     FooterComponent,
     HomeComponent,
     CarReviewsComponent,
-    AdminReviewsComponent
+    AdminReviewsComponent,
+    FuelTypePipe,
+    HighlightDirective
   ],
   imports: [
     BrowserModule,

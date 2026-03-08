@@ -27,17 +27,6 @@ export class HomeComponent implements OnInit {
   rentalError = '';
   isRenting = false;
 
-  readonly fuelTypeLabels: Record<string, string> = {
-    diesel: 'Dizel',
-    petrol: 'Benzin',
-    hybrid: 'Hibrid'
-  };
-
-  readonly transmissionLabels: Record<string, string> = {
-    manual: 'Manuelni',
-    automatic: 'Automatik'
-  };
-
   constructor(
     public authService: AuthService,
     private carService: CarService,
@@ -99,14 +88,6 @@ export class HomeComponent implements OnInit {
   goToReviews(car: Car, event: Event) {
     event.stopPropagation();
     this.router.navigate(['/reviews', car._id]);
-  }
-
-  getFuelLabel(fuelType: string): string {
-    return this.fuelTypeLabels[fuelType] ?? fuelType;
-  }
-
-  getTransmissionLabel(transmission: string): string {
-    return this.transmissionLabels[transmission] ?? transmission;
   }
 
   openRentModal(car: Car) {

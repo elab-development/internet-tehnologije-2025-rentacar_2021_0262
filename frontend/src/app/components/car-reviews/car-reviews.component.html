@@ -13,6 +13,7 @@
       <div class="car-header-info">
         <h1 class="car-name">{{ car.brand }} {{ car.model }}</h1>
         <p class="car-meta">{{ car.year }}. godina &bull; {{ car.pricePerDay }}€/dan</p>
+        <p class="car-meta">{{ car.fuelType | fuelType }} &bull; {{ car.transmission | fuelType:'transmission' }} &bull; {{ car.seats }} sedišta</p>
         <div class="car-avg-rating">
           <span *ngFor="let s of getStars(car.averageRating)" class="star" [class.filled]="s === 'full'">★</span>
           <span class="avg-label">
