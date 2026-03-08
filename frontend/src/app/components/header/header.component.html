@@ -6,6 +6,7 @@
     
     <nav class="nav">
       <a class="nav-link" (click)="navigateToHome()">Početna</a>
+      <a class="nav-link nav-link-admin" *ngIf="authService.isAdmin()" routerLink="/admin/reviews">Recenzije (admin)</a>
       
       <div class="auth-section">
         <ng-container *ngIf="authService.isLoggedIn(); else notLoggedIn">

@@ -18,6 +18,22 @@
         </button>
       </div>
 
+      <div class="category-filter" *ngIf="categories.length > 0">
+        <button 
+          class="filter-btn"
+          [class.active]="selectedCategoryId === null"
+          (click)="filterByCategory(null)">
+          Sve kategorije
+        </button>
+        <button 
+          *ngFor="let cat of categories"
+          class="filter-btn"
+          [class.active]="selectedCategoryId === cat._id"
+          (click)="filterByCategory(cat._id)">
+          {{ cat.name }}
+        </button>
+      </div>
+
       <div *ngIf="isLoading" class="loading-message">Učitavanje automobila...</div>
 
       <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
@@ -32,6 +48,11 @@
           <div class="car-details">
             <h3 class="car-title">{{ car.brand }} {{ car.model }}</h3>
             <p class="car-year">{{ car.year }}. godina</p>
+
+            <div class="car-rating" (click)="goToReviews(car, $event)">
+              <span *ngFor="let s of getStars(car.averageRating)" class="star" [class.filled]="s === 'full'">★</span>
+              <span class="rating-value">{{ car.averageRating > 0 ? car.averageRating.toFixed(1) : 'Bez ocena' }}</span>
+            </div>
             
             <div class="car-specs">
               <div class="spec">
@@ -53,6 +74,10 @@
                 <span class="price-amount">{{ car.pricePerDay }}€</span>
                 <span class="price-label">/dan</span>
               </div>
+
+              <button class="btn btn-reviews" (click)="goToReviews(car, $event)">
+                Recenzije
+              </button>
               
               <button 
                 *ngIf="authService.isAdmin()"

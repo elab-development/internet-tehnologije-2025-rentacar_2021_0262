@@ -1,0 +1,49 @@
+<div class="admin-container">
+
+  <div class="admin-header">
+    <button class="btn-back" (click)="goBack()">← Nazad</button>
+    <h1 class="admin-title">Odobravanje recenzija</h1>
+  </div>
+
+  <p *ngIf="actionMessage" class="action-success">{{ actionMessage }}</p>
+  <p *ngIf="actionError" class="action-error">{{ actionError }}</p>
+
+  <div *ngIf="isLoading" class="loading-msg">Učitavanje...</div>
+
+  <div *ngIf="!isLoading && reviews.length === 0" class="empty-msg">
+    Nema recenzija koje čekaju odobrenje.
+  </div>
+
+  <div class="review-list" *ngIf="!isLoading && reviews.length > 0">
+    <div *ngFor="let review of reviews" class="review-card">
+      <div class="review-meta">
+        <div class="review-car">
+          <span class="label">Automobil:</span>
+          <strong>{{ review.carId.brand }} {{ review.carId.model }}</strong>
+        </div>
+        <div class="review-user">
+          <span class="label">Korisnik:</span>
+          <strong>{{ review.userId.firstName }} {{ review.userId.lastName }}</strong>
+        </div>
+        <div class="review-stars-row">
+          <span class="label">Ocena:</span>
+          <span *ngFor="let s of getStars(review.rating)" class="star" [class.filled]="s === 'full'">★</span>
+          <span class="rating-num">{{ review.rating }}/5</span>
+        </div>
+        <div class="review-date">
+          <span class="label">Datum:</span>
+          {{ review.createdAt | date:'dd.MM.yyyy HH:mm' }}
+        </div>
+      </div>
+
+      <p class="review-comment" *ngIf="review.comment">{{ review.comment }}</p>
+      <p class="no-comment" *ngIf="!review.comment">Bez komentara</p>
+
+      <div class="review-actions">
+        <button class="btn btn-approve" (click)="approve(review)">Odobri</button>
+        <button class="btn btn-reject" (click)="reject(review)">Odbij</button>
+      </div>
+    </div>
+  </div>
+
+</div>

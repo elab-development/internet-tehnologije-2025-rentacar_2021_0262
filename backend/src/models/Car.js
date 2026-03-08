@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const carSchema = new mongoose.Schema({
+  categoryId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category',
+    default: null
+  },
   brand: {
     type: String,
     required: [true, 'Marka je obavezna'],
@@ -52,6 +57,12 @@ const carSchema = new mongoose.Schema({
   imageUrl: {
     type: String,
     default: null
+  },
+  averageRating: {
+    type: Number,
+    default: 0,
+    min: 0,
+    max: 5
   },
   isActive: {
     type: Boolean,

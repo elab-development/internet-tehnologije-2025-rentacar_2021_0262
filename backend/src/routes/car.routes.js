@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { protect, authorize } = require('../middleware/auth.middleware');
+const { protect, authorize, optionalAuth } = require('../middleware/auth.middleware');
 const {
   getCars,
   getCarById,
@@ -8,8 +8,8 @@ const {
   updateCar
 } = require('../controllers/car.controller');
 
-router.get('/', getCars);
-router.get('/:id', getCarById);
+router.get('/', optionalAuth, getCars);
+router.get('/:id', optionalAuth, getCarById);
 router.post('/', protect, authorize('admin'), createCar);
 router.put('/:id', protect, authorize('admin'), updateCar);
 

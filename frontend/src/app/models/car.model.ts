@@ -1,5 +1,6 @@
 export interface Car {
   _id: string;
+  categoryId: string | null;
   brand: string;
   model: string;
   year: number;
@@ -11,4 +12,5 @@ export interface Car {
   imageUrl: string;
   isActive: boolean;
   available: boolean;
+  averageRating: number;
 }

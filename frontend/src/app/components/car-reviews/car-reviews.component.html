@@ -1,0 +1,88 @@
+<div class="reviews-container">
+
+  <div class="back-bar">
+    <button class="btn-back" (click)="goBack()">← Nazad na listu</button>
+  </div>
+
+  <div *ngIf="isLoadingCar" class="loading-msg">Učitavanje...</div>
+  <div *ngIf="carError" class="error-msg">{{ carError }}</div>
+
+  <ng-container *ngIf="car && !isLoadingCar">
+    <div class="car-header">
+      <img [src]="car.imageUrl" [alt]="car.brand + ' ' + car.model" class="car-thumb">
+      <div class="car-header-info">
+        <h1 class="car-name">{{ car.brand }} {{ car.model }}</h1>
+        <p class="car-meta">{{ car.year }}. godina &bull; {{ car.pricePerDay }}€/dan</p>
+        <div class="car-avg-rating">
+          <span *ngFor="let s of getStars(car.averageRating)" class="star" [class.filled]="s === 'full'">★</span>
+          <span class="avg-label">
+            {{ car.averageRating > 0 ? car.averageRating.toFixed(1) + ' prosečna ocena' : 'Još nema ocena' }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="reviews-section">
+      <h2 class="section-title">Recenzije ({{ reviews.length }})</h2>
+
+      <div *ngIf="isLoadingReviews" class="loading-msg">Učitavanje recenzija...</div>
+
+      <div *ngIf="!isLoadingReviews && reviews.length === 0" class="empty-msg">
+        Još nema recenzija za ovaj automobil. Budite prvi!
+      </div>
+
+      <div class="review-list">
+        <div *ngFor="let review of reviews" class="review-card">
+          <div class="review-header">
+            <span class="reviewer-name">{{ review.userId.firstName }} {{ review.userId.lastName }}</span>
+            <div class="review-stars">
+              <span *ngFor="let s of getStars(review.rating)" class="star" [class.filled]="s === 'full'">★</span>
+            </div>
+          </div>
+          <p class="review-comment" *ngIf="review.comment">{{ review.comment }}</p>
+          <p class="review-date">{{ review.createdAt | date:'dd.MM.yyyy' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="add-review-section" *ngIf="authService.isUser()">
+      <h2 class="section-title">Ostavite recenziju</h2>
+
+      <div class="rating-input">
+        <label>Vaša ocena:</label>
+        <div class="stars-input">
+          <span
+            *ngFor="let s of getInputStars(); let i = index"
+            class="star star-input"
+            [class.filled]="s === 'full'"
+            (mouseenter)="hoverRating = i + 1"
+            (mouseleave)="hoverRating = 0"
+            (click)="setRating(i + 1)">★</span>
+        </div>
+      </div>
+
+      <div class="comment-input">
+        <label for="comment">Komentar (opciono):</label>
+        <textarea
+          id="comment"
+          [(ngModel)]="newComment"
+          placeholder="Opišite vaše iskustvo..."
+          rows="4"
+          class="comment-area">
+        </textarea>
+      </div>
+
+      <p *ngIf="submitError" class="submit-error">{{ submitError }}</p>
+      <p *ngIf="submitMessage" class="submit-success">{{ submitMessage }}</p>
+
+      <button class="btn btn-submit" (click)="submitReview()" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Slanje...' : 'Pošalji recenziju' }}
+      </button>
+    </div>
+
+    <div class="login-prompt" *ngIf="!authService.isLoggedIn()">
+      <p>Prijavite se da biste ostavili recenziju.</p>
+    </div>
+  </ng-container>
+
+</div>

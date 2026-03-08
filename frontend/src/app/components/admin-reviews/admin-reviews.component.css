@@ -1,0 +1,164 @@
+.admin-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.btn-back {
+  background: none;
+  border: none;
+  color: #667eea;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.btn-back:hover {
+  text-decoration: underline;
+}
+
+.admin-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+.action-success {
+  background: #f0fff4;
+  border: 1px solid #9ae6b4;
+  color: #276749;
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.action-error {
+  background: #fff5f5;
+  border: 1px solid #feb2b2;
+  color: #c53030;
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.loading-msg,
+.empty-msg {
+  text-align: center;
+  padding: 3rem 0;
+  color: #999;
+  font-size: 1.1rem;
+}
+
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.review-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  border-left: 4px solid #667eea;
+}
+
+.review-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem 2rem;
+  margin-bottom: 1rem;
+}
+
+.review-car,
+.review-user,
+.review-stars-row,
+.review-date {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.label {
+  color: #888;
+  font-size: 0.85rem;
+}
+
+.star {
+  font-size: 1.1rem;
+  color: #ddd;
+}
+
+.star.filled {
+  color: #f5a623;
+}
+
+.rating-num {
+  font-size: 0.9rem;
+  color: #555;
+  margin-left: 0.2rem;
+}
+
+.review-comment {
+  background: #f9f9f9;
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  color: #555;
+  font-style: italic;
+  margin: 0 0 1rem;
+  line-height: 1.5;
+}
+
+.no-comment {
+  color: #bbb;
+  font-size: 0.9rem;
+  margin: 0 0 1rem;
+}
+
+.review-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn {
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-approve {
+  background: linear-gradient(135deg, #48bb78, #38a169);
+  color: white;
+}
+
+.btn-approve:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(56, 161, 105, 0.4);
+}
+
+.btn-reject {
+  background: linear-gradient(135deg, #fc8181, #e53e3e);
+  color: white;
+}
+
+.btn-reject:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(229, 62, 62, 0.4);
+}

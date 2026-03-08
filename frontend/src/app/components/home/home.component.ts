@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CarService } from '../../services/car.service';
 import { RentalService } from '../../services/rental.service';
+import { CategoryService } from '../../services/category.service';
 import { Car } from '../../models/car.model';
+import { Category } from '../../models/category.model';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +13,10 @@ import { Car } from '../../models/car.model';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  allCars: Car[] = [];
   cars: Car[] = [];
+  categories: Category[] = [];
+  selectedCategoryId: string | null = null;
   isLoading = false;
   errorMessage = '';
 
@@ -35,11 +41,21 @@ export class HomeComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private carService: CarService,
-    private rentalService: RentalService
+    private rentalService: RentalService,
+    private categoryService: CategoryService,
+    private router: Router
   ) {}
 
   ngOnInit() {
+    this.loadCategories();
     this.loadCars();
+  }
+
+  loadCategories() {
+    this.categoryService.getCategories().subscribe({
+      next: (cats) => { this.categories = cats; },
+      error: () => {}
+    });
   }
 
   loadCars() {
@@ -47,7 +63,8 @@ export class HomeComponent implements OnInit {
     this.errorMessage = '';
     this.carService.getCars().subscribe({
       next: (cars) => {
-        this.cars = cars;
+        this.allCars = cars;
+        this.applyFilter();
         this.isLoading = false;
       },
       error: () => {
@@ -55,6 +72,33 @@ export class HomeComponent implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+
+  filterByCategory(categoryId: string | null) {
+    this.selectedCategoryId = categoryId;
+    this.applyFilter();
+  }
+
+  applyFilter() {
+    if (!this.selectedCategoryId) {
+      this.cars = this.allCars;
+    } else {
+      this.cars = this.allCars.filter(c => c.categoryId === this.selectedCategoryId);
+    }
+  }
+
+  getStars(rating: number): string[] {
+    const full = Math.floor(rating);
+    const stars: string[] = [];
+    for (let i = 0; i < 5; i++) {
+      stars.push(i < full ? 'full' : 'empty');
+    }
+    return stars;
+  }
+
+  goToReviews(car: Car, event: Event) {
+    event.stopPropagation();
+    this.router.navigate(['/reviews', car._id]);
   }
 
   getFuelLabel(fuelType: string): string {
