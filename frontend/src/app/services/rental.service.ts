@@ -49,4 +49,10 @@ export class RentalService {
       headers: this.getAuthHeaders()
     });
   }
+
+  getAllRentals(): Observable<Rental[]> {
+    return this.http.get<Rental[]>(`${this.apiUrl}/all`, {
+      headers: this.getAuthHeaders()
+    });
+  }
 }

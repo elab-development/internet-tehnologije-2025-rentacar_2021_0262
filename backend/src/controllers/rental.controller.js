@@ -70,3 +70,17 @@ exports.getMyRentals = async (req, res) => {
     res.status(500).json({ message: 'Greška pri dohvatanju rezervacija' });
   }
 };
+
+exports.getAllRentals = async (req, res) => {
+  try {
+    const rentals = await Rental.find()
+      .populate('carId', 'brand model year pricePerDay imageUrl')
+      .populate('userId', 'firstName lastName email')
+      .sort({ createdAt: -1 });
+
+    res.json(rentals);
+  } catch (error) {
+    console.error('getAllRentals error:', error);
+    res.status(500).json({ message: 'Greška pri dohvatanju svih rezervacija' });
+  }
+};

@@ -6,6 +6,9 @@
     
     <nav class="nav">
       <a class="nav-link" (click)="navigateToHome()">Početna</a>
+      <a class="nav-link" *ngIf="authService.isLoggedIn()" routerLink="/my-rentals">
+        {{ authService.isAdmin() ? 'Rezervacije' : 'Moje rezervacije' }}
+      </a>
       <a class="nav-link nav-link-admin" *ngIf="authService.isAdmin()" routerLink="/admin/reviews">Recenzije (admin)</a>
       
       <div class="auth-section">

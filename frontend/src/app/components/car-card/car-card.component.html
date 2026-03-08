@@ -1,0 +1,70 @@
+<div class="car-card" appHighlight [class.unavailable]="!car.available">
+  <div class="car-image-container">
+    <img [src]="car.imageUrl" [alt]="car.brand + ' ' + car.model" class="car-image">
+    <div *ngIf="!car.available" class="unavailable-badge">Nedostupno</div>
+  </div>
+
+  <div class="car-details">
+    <h3 class="car-title">{{ car.brand }} {{ car.model }}</h3>
+    <p class="car-year">{{ car.year }}. godina</p>
+
+    <div class="car-rating" (click)="onReviewsClick($event)">
+      <span *ngFor="let s of getStars(car.averageRating)" class="star" [class.filled]="s === 'full'">★</span>
+      <span class="rating-value">{{ car.averageRating > 0 ? car.averageRating.toFixed(1) : 'Bez ocena' }}</span>
+    </div>
+
+    <div class="car-specs">
+      <div class="spec">
+        <span class="spec-icon">⛽</span>
+        <span>{{ car.fuelType | fuelType }}</span>
+      </div>
+      <div class="spec">
+        <span class="spec-icon">⚙️</span>
+        <span>{{ car.transmission | fuelType:'transmission' }}</span>
+      </div>
+      <div class="spec">
+        <span class="spec-icon">👥</span>
+        <span>{{ car.seats }} sedišta</span>
+      </div>
+    </div>
+
+    <div class="car-footer">
+      <div class="price">
+        <span class="price-amount">{{ car.pricePerDay }}€</span>
+        <span class="price-label">/dan</span>
+      </div>
+
+      <button class="btn btn-reviews" (click)="onReviewsClick($event)">
+        Recenzije
+      </button>
+
+      <button
+        *ngIf="authService.isAdmin()"
+        class="btn btn-edit"
+        (click)="onEditClick($event)">
+        Izmeni
+      </button>
+
+      <button
+        *ngIf="authService.isUser() && car.available"
+        class="btn btn-rent"
+        (click)="onRentClick()">
+        Iznajmi
+      </button>
+
+      <button
+        *ngIf="!authService.isLoggedIn() && car.available"
+        class="btn btn-view"
+        disabled>
+        Prijavite se za iznajmljivanje
+      </button>
+
+      <button
+        *ngIf="authService.isUser() && !car.available"
+        class="btn btn-disabled"
+        disabled>
+        Nedostupno
+      </button>
+    </div>
+  </div>
+</div>

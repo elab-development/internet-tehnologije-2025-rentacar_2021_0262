@@ -13,6 +13,8 @@ import { CarReviewsComponent } from './components/car-reviews/car-reviews.compon
 import { AdminReviewsComponent } from './components/admin-reviews/admin-reviews.component';
 import { FuelTypePipe } from './pipes/fuel-type.pipe';
 import { HighlightDirective } from './directives/highlight.directive';
+import { CarCardComponent } from './components/car-card/car-card.component';
+import { MyRentalsComponent } from './components/my-rentals/my-rentals.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { HighlightDirective } from './directives/highlight.directive';
     CarReviewsComponent,
     AdminReviewsComponent,
     FuelTypePipe,
-    HighlightDirective
+    HighlightDirective,
+    CarCardComponent,
+    MyRentalsComponent
   ],
   imports: [
     BrowserModule,

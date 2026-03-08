@@ -1,0 +1,56 @@
+<div class="my-rentals-container">
+  <div class="page-header">
+    <h1 class="page-title">{{ pageTitle }}</h1>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-message">Učitavanje rezervacija...</div>
+
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+  <div *ngIf="!isLoading && !errorMessage && rentals.length === 0" class="empty-message">
+    <p>Nema rezervacija.</p>
+    <a *ngIf="!authService.isAdmin()" routerLink="/home" class="btn btn-primary">Pregledajte vozila</a>
+  </div>
+
+  <div class="rentals-list" *ngIf="!isLoading && rentals.length > 0">
+    <div *ngFor="let rental of rentals" class="rental-card">
+      <div class="rental-car-info">
+        <img
+          *ngIf="rental.carId?.imageUrl"
+          [src]="rental.carId.imageUrl"
+          [alt]="rental.carId?.brand + ' ' + rental.carId?.model"
+          class="car-thumb">
+        <div class="car-thumb-placeholder" *ngIf="!rental.carId?.imageUrl">🚗</div>
+        <div class="rental-car-name">
+          <h3>{{ rental.carId?.brand }} {{ rental.carId?.model }}</h3>
+          <p class="car-year-text" *ngIf="rental.carId?.year">{{ rental.carId.year }}. godina</p>
+          <p class="rental-user" *ngIf="authService.isAdmin() && rental.userId">
+            {{ rental.userId.firstName }} {{ rental.userId.lastName }}
+            <span class="user-email">{{ rental.userId.email }}</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="rental-details">
+        <div class="rental-detail">
+          <span class="detail-label">Preuzimanje</span>
+          <span class="detail-value">{{ formatDate(rental.startDate) }}</span>
+        </div>
+        <div class="rental-detail">
+          <span class="detail-label">Vraćanje</span>
+          <span class="detail-value">{{ formatDate(rental.endDate) }}</span>
+        </div>
+        <div class="rental-detail">
+          <span class="detail-label">Ukupno</span>
+          <span class="detail-value price-value">{{ rental.totalPrice }}€</span>
+        </div>
+        <div class="rental-detail">
+          <span class="detail-label">Status</span>
+          <span class="status-badge" [class]="'status-' + rental.status">
+            {{ getStatusLabel(rental.status) }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

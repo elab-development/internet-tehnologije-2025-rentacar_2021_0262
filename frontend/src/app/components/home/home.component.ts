@@ -85,8 +85,8 @@ export class HomeComponent implements OnInit {
     return stars;
   }
 
-  goToReviews(car: Car, event: Event) {
-    event.stopPropagation();
+  goToReviews(car: Car, event?: Event) {
+    if (event) event.stopPropagation();
     this.router.navigate(['/reviews', car._id]);
   }
 

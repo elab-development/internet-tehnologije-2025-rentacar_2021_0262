@@ -1,0 +1,206 @@
+.my-rentals-container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 3rem 2rem;
+}
+
+.page-header {
+  max-width: 900px;
+  margin: 0 auto 2rem;
+}
+
+.page-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+.loading-message {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #667eea;
+  padding: 3rem 0;
+}
+
+.error-message {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #e53e3e;
+  padding: 3rem 0;
+}
+
+.empty-message {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #666;
+  font-size: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.rentals-list {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.rental-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.rental-car-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 220px;
+}
+
+.car-thumb {
+  width: 90px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.car-thumb-placeholder {
+  width: 90px;
+  height: 60px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.rental-car-name h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 0.2rem;
+}
+
+.car-year-text {
+  font-size: 0.85rem;
+  color: #888;
+  margin: 0;
+}
+
+.rental-user {
+  font-size: 0.85rem;
+  color: #555;
+  margin: 0.2rem 0 0;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.user-email {
+  font-weight: 400;
+  color: #999;
+  font-size: 0.8rem;
+}
+
+.rental-details {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  flex: 1;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.rental-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.detail-label {
+  font-size: 0.78rem;
+  color: #999;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.detail-value {
+  font-size: 1rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.price-value {
+  color: #667eea;
+  font-size: 1.15rem;
+}
+
+.status-badge {
+  padding: 0.3rem 0.9rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.status-reserved {
+  background-color: #ebf4ff;
+  color: #3182ce;
+}
+
+.status-active {
+  background-color: #f0fff4;
+  color: #38a169;
+}
+
+.status-returned {
+  background-color: #f7f7f7;
+  color: #888;
+}
+
+.btn {
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+@media (max-width: 600px) {
+  .rental-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .rental-details {
+    justify-content: flex-start;
+  }
+}
