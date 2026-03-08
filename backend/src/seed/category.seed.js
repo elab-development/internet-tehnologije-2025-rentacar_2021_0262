@@ -36,27 +36,24 @@ const categories = [
 ];
 
 const seedCategories = async () => {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log('MongoDB Connected...');
-
-    for (const catData of categories) {
-      const existing = await Category.findOne({ slug: catData.slug });
-      if (existing) {
-        console.log(`Kategorija '${catData.name}' već postoji, preskačem...`);
-      } else {
-        const category = new Category(catData);
-        await category.save();
-        console.log(`Kategorija '${catData.name}' kreirana uspešno!`);
-      }
+  for (const catData of categories) {
+    const existing = await Category.findOne({ slug: catData.slug });
+    if (existing) {
+      console.log(`Kategorija '${catData.name}' već postoji, preskačem...`);
+    } else {
+      const category = new Category(catData);
+      await category.save();
+      console.log(`Kategorija '${catData.name}' kreirana uspešno!`);
     }
-
-    console.log('\n✅ Seed kategorija završen!');
-    process.exit(0);
-  } catch (error) {
-    console.error('Greška pri seed-ovanju kategorija:', error);
-    process.exit(1);
   }
+  console.log('✅ Seed kategorija završen!');
 };
 
-seedCategories();
+if (require.main === module) {
+  mongoose.connect(process.env.MONGODB_URI)
+    .then(() => seedCategories())
+    .then(() => process.exit(0))
+    .catch(err => { console.error(err); process.exit(1); });
+}
+
+module.exports = seedCategories;

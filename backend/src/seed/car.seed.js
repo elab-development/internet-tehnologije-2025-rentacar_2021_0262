@@ -90,28 +90,24 @@ const cars = [
 ];
 
 const seedCars = async () => {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log('MongoDB Connected...');
-
-    for (const carData of cars) {
-      const existing = await Car.findOne({ brand: carData.brand, model: carData.model, year: carData.year });
-
-      if (existing) {
-        console.log(`Automobil ${carData.brand} ${carData.model} (${carData.year}) već postoji, preskačem...`);
-      } else {
-        const car = new Car(carData);
-        await car.save();
-        console.log(`Automobil ${carData.brand} ${carData.model} (${carData.year}) kreiran uspešno!`);
-      }
+  for (const carData of cars) {
+    const existing = await Car.findOne({ brand: carData.brand, model: carData.model, year: carData.year });
+    if (existing) {
+      console.log(`Automobil ${carData.brand} ${carData.model} (${carData.year}) već postoji, preskačem...`);
+    } else {
+      const car = new Car(carData);
+      await car.save();
+      console.log(`Automobil ${carData.brand} ${carData.model} (${carData.year}) kreiran uspešno!`);
     }
-
-    console.log('\n✅ Seed automobila završen!');
-    process.exit(0);
-  } catch (error) {
-    console.error('Greška pri seed-ovanju automobila:', error);
-    process.exit(1);
   }
+  console.log('✅ Seed automobila završen!');
 };
 
-seedCars();
+if (require.main === module) {
+  mongoose.connect(process.env.MONGODB_URI)
+    .then(() => seedCars())
+    .then(() => process.exit(0))
+    .catch(err => { console.error(err); process.exit(1); });
+}
+
+module.exports = seedCars;

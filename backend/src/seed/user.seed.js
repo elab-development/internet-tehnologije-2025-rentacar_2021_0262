@@ -30,33 +30,24 @@ const users = [
 ];
 
 const seedUsers = async () => {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log('MongoDB Connected...');
-
-    for (const userData of users) {
-      const existing = await User.findOne({ email: userData.email });
-      if (existing) {
-        console.log(`Korisnik ${userData.email} već postoji, preskačem...`);
-      } else {
-        const user = new User(userData);
-        await user.save();
-        console.log(`Korisnik ${userData.email} kreiran uspešno!`);
-      }
+  for (const userData of users) {
+    const existing = await User.findOne({ email: userData.email });
+    if (existing) {
+      console.log(`Korisnik ${userData.email} već postoji, preskačem...`);
+    } else {
+      const user = new User(userData);
+      await user.save();
+      console.log(`Korisnik ${userData.email} kreiran uspešno!`);
     }
-
-    console.log('\n✅ Seed korisnika završen!');
-    console.log('\nKredenijali:');
-    console.log('─────────────────────────────');
-    users.forEach(u => {
-      console.log(`Email: ${u.email} | Lozinka: user123`);
-    });
-    console.log('─────────────────────────────');
-    process.exit(0);
-  } catch (error) {
-    console.error('Greška pri seed-ovanju korisnika:', error);
-    process.exit(1);
   }
+  console.log('✅ Seed korisnika završen!');
 };
 
-seedUsers();
+if (require.main === module) {
+  mongoose.connect(process.env.MONGODB_URI)
+    .then(() => seedUsers())
+    .then(() => process.exit(0))
+    .catch(err => { console.error(err); process.exit(1); });
+}
+
+module.exports = seedUsers;

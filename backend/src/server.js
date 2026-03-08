@@ -2,11 +2,11 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
+const autoSeed = require('./seed/auto-seed');
 
 const app = express();
 
-// Connect to MongoDB
-connectDB();
+connectDB().then(() => autoSeed());
 
 // Middleware
 app.use(cors());
