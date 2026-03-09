@@ -94,6 +94,19 @@ const cars = [
     imageUrl: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=500&h=300&fit=crop',
     isActive: true,
     categorySlug: 'ekonomska'
+  },
+  {
+    brand: 'Porsche',
+    model: '911',
+    year: 2023,
+    power: 450,
+    seats: 4,
+    fuelType: 'petrol',
+    transmission: 'automatic',
+    pricePerDay: 180,
+    imageUrl: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=500&h=300&fit=crop',
+    isActive: true,
+    categorySlug: 'sportska'
   }
 ];
 
