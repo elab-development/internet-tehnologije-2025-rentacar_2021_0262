@@ -43,6 +43,20 @@ export class HomeComponent implements OnInit {
   addCarError = '';
   addCarLoading = false;
 
+  showEditCarModal = false;
+  editingCar: Car | null = null;
+  editCarData = {
+    brand: '',
+    model: '',
+    year: 0,
+    power: 0,
+    pricePerDay: 0,
+    imageUrl: '',
+    categoryId: ''
+  };
+  editCarError = '';
+  editCarLoading = false;
+
   constructor(
     public authService: AuthService,
     private carService: CarService,
@@ -155,7 +169,58 @@ export class HomeComponent implements OnInit {
   }
 
   editCar(car: Car) {
-    alert(`Izmena automobila: ${car.brand} ${car.model}`);
+    this.editingCar = car;
+    this.editCarData = {
+      brand: car.brand,
+      model: car.model,
+      year: car.year,
+      power: car.power,
+      pricePerDay: car.pricePerDay,
+      imageUrl: car.imageUrl,
+      categoryId: car.categoryId ?? ''
+    };
+    this.editCarError = '';
+    this.showEditCarModal = true;
+  }
+
+  closeEditCarModal() {
+    this.showEditCarModal = false;
+    this.editingCar = null;
+    this.editCarError = '';
+  }
+
+  submitEditCar() {
+    if (!this.editingCar) return;
+    if (!this.editCarData.brand || !this.editCarData.model || !this.editCarData.year || !this.editCarData.power || !this.editCarData.pricePerDay) {
+      this.editCarError = 'Molimo popunite sva obavezna polja.';
+      return;
+    }
+
+    this.editCarLoading = true;
+    this.editCarError = '';
+
+    const payload: Partial<Car> = {
+      brand: this.editCarData.brand,
+      model: this.editCarData.model,
+      year: this.editCarData.year,
+      power: this.editCarData.power,
+      pricePerDay: this.editCarData.pricePerDay,
+      imageUrl: this.editCarData.imageUrl,
+      categoryId: this.editCarData.categoryId || null
+    };
+
+    this.carService.updateCar(this.editingCar._id, payload).subscribe({
+      next: () => {
+        this.editCarLoading = false;
+        this.showEditCarModal = false;
+        this.editingCar = null;
+        this.loadCars();
+      },
+      error: (err) => {
+        this.editCarError = err.error?.message ?? 'Greška pri izmeni automobila.';
+        this.editCarLoading = false;
+      }
+    });
   }
 
   addNewCar() {

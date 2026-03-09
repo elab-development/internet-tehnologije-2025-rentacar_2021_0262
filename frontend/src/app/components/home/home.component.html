@@ -125,6 +125,59 @@
     </div>
   </div>
 
+  <div class="modal-overlay" *ngIf="showEditCarModal" (click)="closeEditCarModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h3 class="modal-title">Izmeni: {{ editingCar?.brand }} {{ editingCar?.model }}</h3>
+
+      <div class="modal-field">
+        <label>Marka *</label>
+        <input type="text" [(ngModel)]="editCarData.brand" class="modal-input">
+      </div>
+
+      <div class="modal-field">
+        <label>Model *</label>
+        <input type="text" [(ngModel)]="editCarData.model" class="modal-input">
+      </div>
+
+      <div class="modal-field">
+        <label>Godina *</label>
+        <input type="number" [(ngModel)]="editCarData.year" class="modal-input" min="1990" max="2030">
+      </div>
+
+      <div class="modal-field">
+        <label>Snaga (KS) *</label>
+        <input type="number" [(ngModel)]="editCarData.power" class="modal-input" min="1">
+      </div>
+
+      <div class="modal-field">
+        <label>Cena po danu (€) *</label>
+        <input type="number" [(ngModel)]="editCarData.pricePerDay" class="modal-input" min="1">
+      </div>
+
+      <div class="modal-field">
+        <label>URL slike</label>
+        <input type="text" [(ngModel)]="editCarData.imageUrl" class="modal-input" placeholder="https://...">
+      </div>
+
+      <div class="modal-field">
+        <label>Kategorija</label>
+        <select [(ngModel)]="editCarData.categoryId" class="modal-input">
+          <option value="">-- Bez kategorije --</option>
+          <option *ngFor="let cat of categories" [value]="cat._id">{{ cat.name }}</option>
+        </select>
+      </div>
+
+      <p *ngIf="editCarError" class="modal-error">{{ editCarError }}</p>
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" (click)="closeEditCarModal()">Otkaži</button>
+        <button class="btn btn-rent" (click)="submitEditCar()" [disabled]="editCarLoading">
+          {{ editCarLoading ? 'Čuvam...' : 'Sačuvaj izmene' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
   <div class="modal-overlay" *ngIf="selectedCar" (click)="closeRentModal()">
     <div class="modal" (click)="$event.stopPropagation()">
       <h3 class="modal-title">Iznajmi: {{ selectedCar.brand }} {{ selectedCar.model }}</h3>
