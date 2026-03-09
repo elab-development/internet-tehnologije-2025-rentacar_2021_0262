@@ -18,4 +18,10 @@ export class CarService {
   getCarById(id: string): Observable<Car> {
     return this.http.get<Car>(`${this.apiUrl}/${id}`);
   }
+
+  createCar(carData: Partial<Car>): Observable<Car> {
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.post<Car>(this.apiUrl, carData, { headers });
+  }
 }

@@ -27,6 +27,22 @@ export class HomeComponent implements OnInit {
   rentalError = '';
   isRenting = false;
 
+  showAddCarModal = false;
+  newCar = {
+    brand: '',
+    model: '',
+    year: new Date().getFullYear(),
+    power: 0,
+    seats: 5,
+    fuelType: 'petrol' as 'petrol' | 'diesel' | 'hybrid',
+    transmission: 'automatic' as 'automatic' | 'manual',
+    pricePerDay: 0,
+    imageUrl: '',
+    categoryId: ''
+  };
+  addCarError = '';
+  addCarLoading = false;
+
   constructor(
     public authService: AuthService,
     private carService: CarService,
@@ -143,7 +159,61 @@ export class HomeComponent implements OnInit {
   }
 
   addNewCar() {
-    alert('Funkcionalnost dodavanja automobila je u pripremi.');
+    this.newCar = {
+      brand: '',
+      model: '',
+      year: new Date().getFullYear(),
+      power: 0,
+      seats: 5,
+      fuelType: 'petrol',
+      transmission: 'automatic',
+      pricePerDay: 0,
+      imageUrl: '',
+      categoryId: this.categories.length > 0 ? this.categories[0]._id : ''
+    };
+    this.addCarError = '';
+    this.showAddCarModal = true;
+  }
+
+  closeAddCarModal() {
+    this.showAddCarModal = false;
+    this.addCarError = '';
+  }
+
+  submitNewCar() {
+    if (!this.newCar.brand || !this.newCar.model || !this.newCar.year || !this.newCar.power || !this.newCar.seats || !this.newCar.pricePerDay) {
+      this.addCarError = 'Molimo popunite sva obavezna polja.';
+      return;
+    }
+
+    this.addCarLoading = true;
+    this.addCarError = '';
+
+    const payload: Partial<Car> = {
+      brand: this.newCar.brand,
+      model: this.newCar.model,
+      year: this.newCar.year,
+      power: this.newCar.power,
+      seats: this.newCar.seats,
+      fuelType: this.newCar.fuelType,
+      transmission: this.newCar.transmission,
+      pricePerDay: this.newCar.pricePerDay,
+      imageUrl: this.newCar.imageUrl,
+      categoryId: this.newCar.categoryId || null,
+      isActive: true
+    };
+
+    this.carService.createCar(payload).subscribe({
+      next: () => {
+        this.addCarLoading = false;
+        this.showAddCarModal = false;
+        this.loadCars();
+      },
+      error: (err) => {
+        this.addCarError = err.error?.message ?? 'Greška pri dodavanju automobila.';
+        this.addCarLoading = false;
+      }
+    });
   }
 
   get todayDate(): string {

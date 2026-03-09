@@ -50,6 +50,81 @@
     </div>
   </section>
 
+  <div class="modal-overlay" *ngIf="showAddCarModal" (click)="closeAddCarModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h3 class="modal-title">Dodaj novi oglas</h3>
+
+      <div class="modal-field">
+        <label>Marka *</label>
+        <input type="text" [(ngModel)]="newCar.brand" class="modal-input" placeholder="npr. BMW">
+      </div>
+
+      <div class="modal-field">
+        <label>Model *</label>
+        <input type="text" [(ngModel)]="newCar.model" class="modal-input" placeholder="npr. M3">
+      </div>
+
+      <div class="modal-field">
+        <label>Godina *</label>
+        <input type="number" [(ngModel)]="newCar.year" class="modal-input" min="1990" max="2030">
+      </div>
+
+      <div class="modal-field">
+        <label>Snaga (KS) *</label>
+        <input type="number" [(ngModel)]="newCar.power" class="modal-input" min="1">
+      </div>
+
+      <div class="modal-field">
+        <label>Broj sedišta *</label>
+        <input type="number" [(ngModel)]="newCar.seats" class="modal-input" min="1" max="9">
+      </div>
+
+      <div class="modal-field">
+        <label>Gorivo *</label>
+        <select [(ngModel)]="newCar.fuelType" class="modal-input">
+          <option value="petrol">Benzin</option>
+          <option value="diesel">Dizel</option>
+          <option value="hybrid">Hibrid</option>
+        </select>
+      </div>
+
+      <div class="modal-field">
+        <label>Menjač *</label>
+        <select [(ngModel)]="newCar.transmission" class="modal-input">
+          <option value="automatic">Automatik</option>
+          <option value="manual">Manuelni</option>
+        </select>
+      </div>
+
+      <div class="modal-field">
+        <label>Cena po danu (€) *</label>
+        <input type="number" [(ngModel)]="newCar.pricePerDay" class="modal-input" min="1">
+      </div>
+
+      <div class="modal-field">
+        <label>URL slike</label>
+        <input type="text" [(ngModel)]="newCar.imageUrl" class="modal-input" placeholder="https://...">
+      </div>
+
+      <div class="modal-field">
+        <label>Kategorija</label>
+        <select [(ngModel)]="newCar.categoryId" class="modal-input">
+          <option value="">-- Bez kategorije --</option>
+          <option *ngFor="let cat of categories" [value]="cat._id">{{ cat.name }}</option>
+        </select>
+      </div>
+
+      <p *ngIf="addCarError" class="modal-error">{{ addCarError }}</p>
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" (click)="closeAddCarModal()">Otkaži</button>
+        <button class="btn btn-rent" (click)="submitNewCar()" [disabled]="addCarLoading">
+          {{ addCarLoading ? 'Čuvam...' : 'Sačuvaj' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
   <div class="modal-overlay" *ngIf="selectedCar" (click)="closeRentModal()">
     <div class="modal" (click)="$event.stopPropagation()">
       <h3 class="modal-title">Iznajmi: {{ selectedCar.brand }} {{ selectedCar.model }}</h3>
